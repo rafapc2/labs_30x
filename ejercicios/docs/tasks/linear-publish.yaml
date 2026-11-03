@@ -1,0 +1,78 @@
+planningWave: bootstrap-demo
+linearProject: app-mcp-gemela-para-chatgpt-f3b2f69fafd8
+linearProjectUrl: https://linear.app/test-rpc001/project/app-mcp-gemela-para-chatgpt-f3b2f69fafd8
+publishedAt: "2026-11-03T01:40:48Z"
+publishedWith: conector MCP de Linear (no el script de la skill convert-tasks-to-linear)
+tasks:
+  TASK-001:
+    issue: TES-5
+    url: https://linear.app/test-rpc001/issue/TES-5/andamiaje-del-proyecto-y-docker-compose
+    file: docs/tasks/001-andamiaje-compose.md
+  TASK-002:
+    issue: TES-7
+    url: https://linear.app/test-rpc001/issue/TES-7/esquema-de-base-de-datos-y-migraciones
+    file: docs/tasks/002-esquema-base-datos.md
+  TASK-003:
+    issue: TES-9
+    url: https://linear.app/test-rpc001/issue/TES-9/autenticacion-con-google-o-github
+    file: docs/tasks/003-autenticacion-google-github.md
+  TASK-004:
+    issue: TES-8
+    url: https://linear.app/test-rpc001/issue/TES-8/lectura-segura-de-urls
+    file: docs/tasks/004-lectura-segura-urls.md
+  TASK-005:
+    issue: TES-10
+    url: https://linear.app/test-rpc001/issue/TES-10/extraccion-y-almacenamiento-del-contenido
+    file: docs/tasks/005-extraccion-contenido.md
+  TASK-006:
+    issue: TES-11
+    url: https://linear.app/test-rpc001/issue/TES-11/generacion-de-metadata-con-el-modelo-de-lenguaje
+    file: docs/tasks/006-generacion-metadata-llm.md
+  TASK-007:
+    issue: TES-13
+    url: https://linear.app/test-rpc001/issue/TES-13/endpoint-post-apiapps
+    file: docs/tasks/007-endpoint-crear-app.md
+  TASK-008:
+    issue: TES-12
+    url: https://linear.app/test-rpc001/issue/TES-12/herramientas-de-la-app-buscar-contacto-y-listar-paginas
+    file: docs/tasks/008-herramientas-compartidas.md
+  TASK-009:
+    issue: TES-14
+    url: https://linear.app/test-rpc001/issue/TES-14/servidor-mcp-multi-app
+    file: docs/tasks/009-servidor-mcp-multiapp.md
+  TASK-010:
+    issue: TES-15
+    url: https://linear.app/test-rpc001/issue/TES-15/verificacion-de-propiedad-del-sitio
+    file: docs/tasks/010-verificacion-propiedad.md
+  TASK-011:
+    issue: TES-16
+    url: https://linear.app/test-rpc001/issue/TES-16/simulador-de-chatgpt
+    file: docs/tasks/011-simulador-chatgpt.md
+  TASK-012:
+    issue: TES-18
+    url: https://linear.app/test-rpc001/issue/TES-18/despliegue-y-retiro-de-apps
+    file: docs/tasks/012-despliegue-y-retiro.md
+  TASK-013:
+    issue: TES-19
+    url: https://linear.app/test-rpc001/issue/TES-19/panel-basico-de-uso
+    file: docs/tasks/013-panel-uso.md
+  TASK-014:
+    issue: TES-6
+    url: https://linear.app/test-rpc001/issue/TES-6/investigar-el-formato-del-zip-de-envio-a-chatgpt
+    file: docs/tasks/014-investigar-formato-zip.md
+  TASK-015:
+    issue: TES-20
+    url: https://linear.app/test-rpc001/issue/TES-20/paquete-de-publicacion-y-guia
+    file: docs/tasks/015-paquete-publicacion.md
+  TASK-016:
+    issue: TES-17
+    url: https://linear.app/test-rpc001/issue/TES-17/interfaz-base-inicio-de-sesion-y-formulario-de-url
+    file: docs/tasks/016-interfaz-formulario-url.md
+  TASK-017:
+    issue: TES-21
+    url: https://linear.app/test-rpc001/issue/TES-21/tunel-ngrok-y-guion-de-la-demo-con-chatgpt
+    file: docs/tasks/017-tunel-y-demo.md
+  TASK-018:
+    issue: TES-22
+    url: https://linear.app/test-rpc001/issue/TES-22/pruebas-de-aceptacion-de-extremo-a-extremo
+    file: docs/tasks/018-aceptacion-extremo-a-extremo.md

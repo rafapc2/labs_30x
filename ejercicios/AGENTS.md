@@ -24,14 +24,14 @@ La fuente de verdad es [docs/spec-mcp-gemela.md](docs/spec-mcp-gemela.md). Si al
 
 Python, FastAPI, PostgreSQL, SDK oficial de MCP para Python, OpenAI (el modelo más económico, en `MODELO_LLM`), Docker Compose, `pytest`, ngrok con dominio estático para la demo.
 
-## Comandos esperados
+## Comandos
 
-Se crean en TASK-001; confirmar que existen antes de usarlos.
+Desde `ejercicios/`. Las pruebas necesitan el PostgreSQL del compose levantado (`docker compose up -d postgres`).
 
 ```bash
-docker compose up        # levanta api, mcp y postgres
-pytest                   # todas las pruebas
-pytest tests/aceptacion  # pruebas de los tres criterios
+docker compose up --build       # levanta api (8000), mcp (8001) y postgres
+uv run pytest                   # todas las pruebas (177 al 2026-11-03)
+uv run pytest tests/aceptacion  # pruebas de los tres criterios
 ```
 
 ## Convenciones
@@ -47,3 +47,5 @@ pytest tests/aceptacion  # pruebas de los tres criterios
 - [docs/architecture.md](docs/architecture.md): componentes y flujo de datos.
 - [docs/decisions/](docs/decisions/): decisiones de arquitectura.
 - [docs/tasks/](docs/tasks/): plan de tareas, con `task-package.yaml` y `milestones.md`.
+- [docs/tasks/progreso.md](docs/tasks/progreso.md): estado real de cada tarea y decisiones de implementación que la spec no recoge.
+- Dependencias: el `uv.lock` es la fuente; la imagen instala `requirements.txt`, exportado de él (`uv export --frozen --no-dev --no-emit-project --no-hashes -o requirements.txt`). Regenerarlo al cambiar dependencias.

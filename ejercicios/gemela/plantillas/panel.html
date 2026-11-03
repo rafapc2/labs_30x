@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block titulo %}Panel · {{ app.nombre }}{% endblock %}
+{% block contenido %}
+<p><a href="/apps/{{ app.id }}">← {{ app.nombre }}</a></p>
+<h2 style="margin-top:0">Uso de la app</h2>
+<p class="suave">Solo se cuentan las llamadas. No se guarda lo que se pregunta ni quién lo pregunta.</p>
+<div class="tarjeta">Llamadas: <b>{{ panel.total }}</b> · Errores: <b>{{ panel.errores }}</b> · Última: <b>{{ panel.ultima_llamada or 'ninguna' }}</b></div>
+<h2>Por herramienta</h2>
+<table><tr><th>Herramienta</th><th>Llamadas</th></tr>
+{% for h, n in panel.por_herramienta.items() %}<tr><td><code>{{ h }}</code></td><td>{{ n }}</td></tr>{% else %}<tr><td colspan="2" class="suave">Sin llamadas todavía.</td></tr>{% endfor %}</table>
+<h2>Por día</h2>
+<table><tr><th>Día</th><th>Llamadas</th></tr>
+{% for d, n in panel.por_dia.items() %}<tr><td>{{ d }}</td><td>{{ n }}</td></tr>{% else %}<tr><td colspan="2" class="suave">Sin llamadas todavía.</td></tr>{% endfor %}</table>
+{% endblock %}

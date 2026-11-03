@@ -72,6 +72,8 @@ Modelo de datos mínimo:
 - `herramientas`: app, nombre, descripción, tipo.
 - `llamadas`: app, herramienta, fecha, resultado (ok o error). No guarda el contenido de la consulta.
 
+**Diferencias de la implementación respecto de este modelo** (detalle en [progreso.md](tasks/progreso.md)): `apps` tiene además `descripcion_corta`, `descripcion_larga`, `categoria` y `contacto`; hay una sexta tabla, `uso_simulador` (cuenta mensajes por cuenta para el límite de S13, sin texto); las migraciones son SQL simples en `migraciones/`.
+
 ### 6.3 Contrato de la API
 
 - `GET /auth/{proveedor}/login`, `GET /auth/{proveedor}/callback` y `POST /auth/logout`, con `proveedor` igual a `google` o `github`.
@@ -83,6 +85,8 @@ Modelo de datos mínimo:
 - `POST /api/apps/{id}/despliegue`: activa la app y devuelve su URL MCP. Responde 403 si la app no está verificada.
 - `GET /api/apps/{id}/paquete`: devuelve el paquete de publicación (ver 6.10). Responde 403 si no está verificada.
 - `GET /api/apps/{id}/panel`: devuelve llamadas por día, por herramienta, errores y fecha de la última llamada.
+
+Códigos adicionales de la implementación: la verificación responde 422 si el sitio resuelve a una dirección no pública y 502 si no responde; el retiro responde 409 si la app no está desplegada; el simulador responde 422 con un mensaje vacío o de más de 2000 caracteres y 429 pasados 30 mensajes por hora; `GET /api/apps/{id}/paquete.zip` descarga el ZIP del [ADR 0003](decisions/0003-formato-zip-envio.md). La interfaz sigue el [ADR 0004](decisions/0004-interfaz-html-en-servidor.md).
 
 ### 6.4 Reglas de negocio
 
@@ -177,7 +181,7 @@ Cuatro vistas: formulario de URL, simulador con chat, paquete de publicación y 
 - Q3 (resuelta): el estándar es un servidor MCP con transporte HTTP en streaming en una ruta `/mcp`. La página de anuncio de OpenAI no se pudo leer (error 403), así que esto se apoya en la documentación para desarrolladores. Esta rebanada no usa interfaz propia dentro de ChatGPT: solo herramientas. En la documentación de OpenAI el producto aparece como «Plugins».
 - Q4 (resuelta): el envío al directorio se hace solo desde el panel de OpenAI, con la carga de un archivo ZIP; no hay API de envío. Detalles en 6.10.
 - Q5 (resuelta): el dueño se autentica con Google o GitHub (6.1). El panel y el resto de acciones son solo de la cuenta dueña de la app (BR-MCP-07). Pendiente al implementar: registrar la aplicación en cada proveedor para obtener las credenciales OAuth, con la URL de retorno local.
-- Q6 (investigar durante el desarrollo): estructura exacta del ZIP de envío. La guía consultada menciona campos de formato Codex (`version`, `description`, `author.name`, `capabilities`, `composerIcon`, `logo`), pero no se leyó el formato completo del paquete. Es la primera tarea de investigación del paso 6; el resultado actualiza la sección 6.10.
+- Q6 (resuelta): estructura del ZIP según la guía oficial de envío, con la disposición Agent Plugins. Ver [ADR 0003](decisions/0003-formato-zip-envio.md) y la sección 6.10. Quedan tres puntos que la guía no cubre y que se confirman al subir el primer paquete real.
 
 ### 6.10 Paquete de publicación
 
@@ -200,3 +204,7 @@ Qué genera el sistema y qué completa el dueño:
 | Textos de política de privacidad y de términos | Publicarlos en una URL HTTPS de su propio sitio, y aportar las URL de sitio web y soporte |
 | URL del servidor MCP | Un punto de conexión HTTPS permanente: el túnel de la demo no basta para el envío |
 | Guía paso a paso, con el aviso de que el simulador es una aproximación y de que el plan de ChatGPT debe permitir servidores MCP personalizados | Iconos |
+
+### Estructura del ZIP
+
+El ZIP usa la disposición Agent Plugins: `plugin.json`, `mcp.json`, una carpeta `skills/` con una skill de bienvenida y una carpeta `assets/` con los iconos. El detalle, las restricciones y lo que la guía no cubre están en el [ADR 0003](decisions/0003-formato-zip-envio.md).

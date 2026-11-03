@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block titulo %}{{ app.nombre }}{% endblock %}
+{% block contenido %}
+<p><a href="/">← Tus apps</a></p>
+<h2 style="margin-top:0">{{ app.nombre }}</h2>
+<p>{{ app.descripcion }}</p>
+<p class="suave">{{ app.url }} · estado: <b>{{ app.estado }}</b> · {% if app.verificada %}<span class="ok">propiedad verificada</span>{% else %}propiedad sin verificar{% endif %}</p>
+
+<h2>Herramientas</h2>
+{% for h in herramientas %}<div class="tarjeta"><code>{{ h.nombre }}</code><br>{{ h.descripcion }}</div>{% endfor %}
+
+<h2>Probar en un simulador de ChatGPT</h2>
+<p class="suave">Es una aproximación: ChatGPT real puede elegir otras herramientas o responder distinto. La prueba real se hace en ChatGPT con el modo de desarrollador.</p>
+<div class="tarjeta">
+  <div id="chat" class="chat" aria-live="polite"></div>
+  <form id="form-sim" style="display:flex;gap:8px;margin-top:8px">
+    <input id="mensaje" type="text" placeholder="Pregunta algo sobre el sitio…" maxlength="2000" required style="flex:1;padding:10px;border:1px solid var(--borde);border-radius:8px;background:transparent;color:inherit">
+    <button class="primario">Enviar</button>
+  </form>
+</div>
+
+<h2>Verificar la propiedad</h2>
+{% if app.verificada %}<p class="ok">Ya está verificada.</p>{% else %}
+<p>Para desplegar hace falta demostrar que controlas el sitio. Pon una de estas dos cosas y pulsa verificar:</p>
+<p>1. En la página de inicio, dentro de <code>&lt;head&gt;</code>:</p>
+<pre>&lt;meta name="mcp-gemela" content="{{ app.token_verificacion }}"&gt;</pre>
+<p>2. O un archivo en <code>/.well-known/mcp-gemela.txt</code> que contenga solo:</p>
+<pre>{{ app.token_verificacion }}</pre>
+<p><button id="verificar">Verificar ahora</button> <span id="res-verificar"></span></p>
+{% endif %}
+
+<h2>Despliegue</h2>
+<p>
+  {% if app.estado == 'desplegada' %}
+    <span class="ok">Desplegada.</span> URL MCP: <code>{{ url_mcp }}</code><br>
+    <button id="retirar">Retirar app</button>
+  {% else %}
+    <button id="desplegar" class="primario" {% if not app.verificada %}disabled title="Verifica la propiedad primero"{% endif %}>Desplegar</button>
+  {% endif %}
+  <span id="res-despliegue"></span>
+</p>
+<p><a class="boton" href="/apps/{{ app.id }}/panel">Ver panel de uso</a> {% if app.verificada %}<a class="boton" href="/apps/{{ app.id }}/paquete">Paquete de publicación</a>{% endif %}</p>
+
+<script>
+const id = {{ app.id|string|tojson }};
+const post = (ruta, cuerpo) => fetch(ruta, {method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify(cuerpo||{})});
+const chat = document.getElementById('chat');
+function linea(quien, texto) { const d = document.createElement('div'); d.className='msg'; const b=document.createElement('b'); b.textContent=quien; const t=document.createElement('span'); t.textContent=texto; d.append(b,t); chat.append(d); chat.scrollTop = chat.scrollHeight; }
+document.getElementById('form-sim').addEventListener('submit', async e => {
+  e.preventDefault(); const campo = document.getElementById('mensaje'); const texto = campo.value.trim(); if (!texto) return;
+  linea('Tú', texto); campo.value = '';
+  const r = await post(`/api/apps/${id}/simulador`, {mensaje: texto}); const j = await r.json();
+  if (r.ok) linea('ChatGPT' + (j.herramienta ? ` · usó la herramienta ${j.herramienta}` : ' · sin usar herramientas'), j.respuesta);
+  else linea('Error', j.detail || r.status);
+});
+async function accion(ruta, destino) { const r = await post(ruta); const j = await r.json().catch(()=>({})); if (r.ok) location.reload(); else document.getElementById(destino).textContent = ' ' + (j.detail || r.status); }
+const v = document.getElementById('verificar'); if (v) v.onclick = () => accion(`/api/apps/${id}/verificacion`, 'res-verificar');
+const d = document.getElementById('desplegar'); if (d) d.onclick = () => accion(`/api/apps/${id}/despliegue`, 'res-despliegue');
+const x = document.getElementById('retirar'); if (x) x.onclick = () => accion(`/api/apps/${id}/retiro`, 'res-despliegue');
+</script>
+{% endblock %}

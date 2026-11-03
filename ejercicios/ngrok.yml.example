@@ -1,0 +1,10 @@
+# Copia a ngrok.yml (ya está en .gitignore) y completa. No subas tu token al repositorio.
+# Expone SOLO el servidor MCP (puerto 8001). La interfaz (8000) no debe exponerse nunca.
+version: "3"
+agent:
+  authtoken: PON_AQUI_TU_TOKEN_DE_NGROK
+endpoints:
+  - name: gemela-mcp
+    url: https://PON-AQUI-TU-DOMINIO-ESTATICO.ngrok-free.app
+    upstream:
+      url: 8001

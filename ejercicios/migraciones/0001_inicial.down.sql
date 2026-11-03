@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS uso_simulador;
+DROP TABLE IF EXISTS llamadas;
+DROP TABLE IF EXISTS herramientas;
+DROP TABLE IF EXISTS contenido;
+DROP TABLE IF EXISTS apps;
+DROP TABLE IF EXISTS usuarios;

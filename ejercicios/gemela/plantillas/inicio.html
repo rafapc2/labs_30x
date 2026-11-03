@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block contenido %}
+{% if not usuario %}
+  <p>Pega la dirección de un sitio web público y genera una app para ChatGPT que responda sobre él.</p>
+  <div class="tarjeta">
+    <p><b>Inicia sesión para continuar</b></p>
+    {% for p in proveedores %}<a class="boton" href="/auth/{{ p }}/login">Continuar con {{ p|capitalize }}</a> {% endfor %}
+    {% if not proveedores %}<p class="error">No hay ningún proveedor de inicio de sesión configurado. Define las credenciales de GitHub o Google en <code>.env</code>.</p>{% endif %}
+  </div>
+{% else %}
+  <form method="post" action="/analizar" class="tarjeta">
+    <label for="url"><b>Dirección del sitio</b></label>
+    <input id="url" name="url" type="url" required placeholder="https://www.tu-sitio.com" value="{{ url or '' }}" aria-describedby="error-url">
+    {% if error %}<p id="error-url" class="error" role="alert">{{ error }}</p>{% endif %}
+    <p><button class="primario">Generar app</button> <span class="suave">El análisis puede tardar hasta 2 minutos.</span></p>
+  </form>
+  <h2>Tus apps</h2>
+  {% for a in apps %}
+    <div class="tarjeta"><a href="/apps/{{ a.id }}"><b>{{ a.nombre }}</b></a> <span class="suave">· {{ a.estado }}{% if a.verificada %} · verificada{% endif %}</span><br><span class="suave">{{ a.url }}</span></div>
+  {% else %}<p class="suave">Todavía no has creado ninguna.</p>{% endfor %}
+{% endif %}
+{% endblock %}

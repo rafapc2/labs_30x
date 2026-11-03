@@ -1,0 +1,1 @@
+ALTER TABLE apps ADD COLUMN descripcion_corta TEXT NOT NULL DEFAULT '';

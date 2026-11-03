@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block titulo %}Paquete · {{ app.nombre }}{% endblock %}
+{% block contenido %}
+<p><a href="/apps/{{ app.id }}">← {{ app.nombre }}</a></p>
+<h2 style="margin-top:0">Paquete de publicación</h2>
+<p>Esto es lo que necesitas para enviar la app al directorio de ChatGPT. <b>El envío lo haces tú</b> desde el panel de OpenAI: no hay forma de automatizarlo.</p>
+{% for a in paquete.advertencias %}<p class="error">{{ a }}</p>{% endfor %}
+<p><a class="boton primario" href="/api/apps/{{ app.id }}/paquete.zip">Descargar ZIP</a></p>
+
+<h2>Lo que falta y solo puedes aportar tú</h2>
+<ul>{% for p in paquete.pendiente_del_dueno %}<li><code>{{ p }}</code></li>{% endfor %}</ul>
+
+<h2>Guía paso a paso</h2>
+<ol>{% for p in paquete.guia %}<li>{{ p }}</li>{% endfor %}</ol>
+
+<h2>Datos del listado</h2>
+<table>{% for k, v in paquete.campos.items() %}<tr><th>{{ k }}</th><td>{{ v }}</td></tr>{% endfor %}</table>
+
+<h2>Casos de prueba</h2>
+<h3>Positivos</h3>
+{% for c in paquete.casos_de_prueba.positive %}<div class="tarjeta">{{ c.prompt }}<br><span class="suave">Herramientas: {{ c.tools_triggered|join(', ') }} · {{ c.expected_behavior }}</span></div>{% endfor %}
+<h3>Negativos</h3>
+{% for c in paquete.casos_de_prueba.negative %}<div class="tarjeta">{{ c.prompt }}<br><span class="suave">{{ c.expected_behavior }}</span></div>{% endfor %}
+
+<h2>Política de privacidad</h2><pre>{{ paquete.politica_privacidad }}</pre>
+<h2>Términos de servicio</h2><pre>{{ paquete.terminos }}</pre>
+{% endblock %}
