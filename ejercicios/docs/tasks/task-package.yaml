@@ -1,0 +1,44 @@
+planningWave: bootstrap-demo
+tasksDir: docs/tasks
+milestones:
+  - "M1: Cimientos y autenticación"
+  - "M2: Análisis y generación"
+  - "M3: Simulador, verificación y despliegue MCP"
+  - "M4: Paquete, panel y demo"
+tasks:
+  - id: TASK-001
+    file: docs/tasks/001-andamiaje-compose.md
+  - id: TASK-002
+    file: docs/tasks/002-esquema-base-datos.md
+  - id: TASK-003
+    file: docs/tasks/003-autenticacion-google-github.md
+  - id: TASK-004
+    file: docs/tasks/004-lectura-segura-urls.md
+  - id: TASK-005
+    file: docs/tasks/005-extraccion-contenido.md
+  - id: TASK-006
+    file: docs/tasks/006-generacion-metadata-llm.md
+  - id: TASK-007
+    file: docs/tasks/007-endpoint-crear-app.md
+  - id: TASK-008
+    file: docs/tasks/008-herramientas-compartidas.md
+  - id: TASK-009
+    file: docs/tasks/009-servidor-mcp-multiapp.md
+  - id: TASK-010
+    file: docs/tasks/010-verificacion-propiedad.md
+  - id: TASK-011
+    file: docs/tasks/011-simulador-chatgpt.md
+  - id: TASK-012
+    file: docs/tasks/012-despliegue-y-retiro.md
+  - id: TASK-013
+    file: docs/tasks/013-panel-uso.md
+  - id: TASK-014
+    file: docs/tasks/014-investigar-formato-zip.md
+  - id: TASK-015
+    file: docs/tasks/015-paquete-publicacion.md
+  - id: TASK-016
+    file: docs/tasks/016-interfaz-formulario-url.md
+  - id: TASK-017
+    file: docs/tasks/017-tunel-y-demo.md
+  - id: TASK-018
+    file: docs/tasks/018-aceptacion-extremo-a-extremo.md

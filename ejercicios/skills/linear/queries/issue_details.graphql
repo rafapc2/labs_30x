@@ -1,0 +1,50 @@
+query IssueDetails($id: String!, $labelsAfter: String) {
+  issue(id: $id) {
+    id
+    identifier
+    title
+    url
+    description
+    branchName
+    state {
+      id
+      name
+      type
+    }
+    labels(first: 100, after: $labelsAfter) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      nodes {
+        id
+        name
+      }
+    }
+    team {
+      id
+      key
+      name
+    }
+    project {
+      id
+      name
+      slugId
+      url
+    }
+    children(first: 1) {
+      nodes {
+        id
+        identifier
+      }
+    }
+    attachments {
+      nodes {
+        id
+        title
+        url
+        sourceType
+      }
+    }
+  }
+}
